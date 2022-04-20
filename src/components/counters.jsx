@@ -1,6 +1,6 @@
 import Counter from "./counter";
 const Counters = ({ counters, onIncrement, onDecrement, onDelete }) => (
-  <div class="grid">
+  <div class="row">
     {counters.map((counter) => (
       <Counter
         key={counter.id}

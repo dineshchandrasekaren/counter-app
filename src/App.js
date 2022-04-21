@@ -3,10 +3,11 @@ import Counters from "./components/counters";
 import NavBar from "./components/NavBar";
 import {
   decrement,
-  deleted,
+  deleteCounter,
   getAllData,
   increment,
   reset,
+  addCounter,
 } from "./redux/actionCalls";
 
 class App extends Component {
@@ -14,9 +15,13 @@ class App extends Component {
     counters: getAllData(),
   };
 
+  //!Add
+  handleAdd = () => {
+    this.setState({ counters: addCounter() });
+  };
   //! delete
   handleDelete = (counterId) => {
-    this.setState({ counters: deleted(counterId) });
+    this.setState({ counters: deleteCounter(counterId) });
   };
   //!Increment
   handleIncrement = (counterId) => {
@@ -38,9 +43,12 @@ class App extends Component {
             this.state.counters.filter((c) => c.value !== 0).length
           }
         />
-        <main class="container">
-          <button onClick={this.handleReset} className="btn btn-primary">
+        <main className="container">
+          <button onClick={this.handleReset} className="btn m-2 btn-primary">
             Reset
+          </button>
+          <button onClick={this.handleAdd} className="btn  m-2  btn-primary">
+            Add
           </button>
           <Counters
             onDelete={this.handleDelete}

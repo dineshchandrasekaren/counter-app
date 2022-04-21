@@ -1,44 +1,34 @@
 import React, { Component } from "react";
 import Counters from "./components/counters";
 import NavBar from "./components/NavBar";
+import {
+  decrement,
+  deleted,
+  getAllData,
+  increment,
+  reset,
+} from "./redux/actionCalls";
 
 class App extends Component {
   state = {
-    counters: [
-      { id: 1, value: 0 },
-      { id: 2, value: 0 },
-      { id: 3, value: 0 },
-      { id: 4, value: 0 },
-    ],
+    counters: getAllData(),
   };
+
+  //! delete
   handleDelete = (counterId) => {
-    const counters = this.state.counters.filter(
-      (counter) => counter.id !== counterId
-    );
-    this.setState({ counters });
+    this.setState({ counters: deleted(counterId) });
   };
+  //!Increment
   handleIncrement = (counterId) => {
-    const counters = this.state.counters;
-    counters.forEach((counter) => {
-      if (counter.id === counterId) {
-        counter.value++;
-      }
-    });
-    this.setState({ counters });
+    this.setState({ counters: increment(counterId) });
   };
+
+  //!Decrement
   handleDecrement = (counterId) => {
-    const counters = this.state.counters;
-    counters.forEach((counter) => {
-      if (counter.id === counterId) {
-        counter.value--;
-      }
-    });
-    this.setState({ counters });
+    this.setState({ counters: decrement(counterId) });
   };
   handleReset = () => {
-    const counters = this.state.counters;
-    counters.forEach((counter) => (counter.value = 0));
-    this.setState({ counters });
+    this.setState({ counters: reset() });
   };
   render() {
     return (
@@ -50,7 +40,6 @@ class App extends Component {
         />
         <main class="container">
           <button onClick={this.handleReset} className="btn btn-primary">
-            {" "}
             Reset
           </button>
           <Counters
